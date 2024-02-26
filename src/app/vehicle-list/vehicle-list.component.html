@@ -1,0 +1,8 @@
+<div>
+  <app-searchbar></app-searchbar>
+  <div class="grid grid-cols-4">
+    @for (vehicle of vehicles; track vehicle){
+      <app-vehicle-card [vehicle]=vehicle></app-vehicle-card>
+    }
+  </div>
+</div>

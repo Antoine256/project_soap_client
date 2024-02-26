@@ -1,0 +1,9 @@
+<div class="card w-96  shadow-xl hover:bg-base-300 cursor-pointer" (click)="setVehicle()">
+  <figure class="px-10 pt-10">
+    <img src="{{vehicle.media.image.thumbnail_url}}" alt="Car" class="rounded-xl" />
+  </figure>
+  <div class="card-body items-center text-center">
+    <h2 class="card-title">{{vehicle.naming.make}} {{vehicle.naming.model}}</h2>
+    <p>{{vehicle.naming.chargetrip_version}}</p>
+  </div>
+</div>

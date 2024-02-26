@@ -1,0 +1,23 @@
+<div class="flex h-screen w-screen overflow-hidden">
+  <div class="h-full w-1/4">
+    <app-navbar></app-navbar>
+  </div>
+  <div class="w-3/4 overflow-hidden">
+    <div class="map-wrap">
+    <div class="map" #map></div>
+    </div>
+  </div>
+</div>
+<style>
+  .map-wrap {
+    position: relative;
+    width: 100%;
+    height: calc(100vh); /* calculate height of the screen minus the heading */
+  }
+
+  .map {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+</style>
