@@ -1,34 +1,15 @@
 import { Injectable } from '@angular/core';
 import axios from 'axios';
 import { Trace } from './trace.model';
-import qql from 'graphql-tag';
 import { createClient, fetchExchange } from '@urql/core';
+import {Vehicle } from "./vehicle";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  private vehicleListQuery = qql`
-    query vehicleList($page: Int, $size: Int, $search: String) {
-      vehicleList(
-        page: $page,
-        size: $size,
-        search: $search,
-      ) {
-        id
-        naming {
-          make
-          model
-          chargetrip_version
-        }
-        media {
-          image {
-            thumbnail_url
-          }
-        }
-      }
-    }`;
+  private restUrl = "http://localhost:3000/";
 
   constructor() {}
 
@@ -54,22 +35,19 @@ export class ApiService {
     })
   }
 
-  async requestRoad(firstPoint: any, secondPoint: any): Promise<Trace>{
-    console.log("request road");
-    let firstLatLong = firstPoint.geo.center.longitude + "," + firstPoint.geo.center.latitude;
-    let secondLatLong = secondPoint.geo.center.longitude + "," + secondPoint.geo.center.latitude;
-    let res =await axios.get("https://api.openrouteservice.org/v2/directions/driving-car?api_key=5b3ce3597851110001cf62487d326cc3ef9445429b2b98878d8e9224&start="+firstLatLong+"&end="+secondLatLong
-      ,{headers: {"Authorization": "5b3ce3597851110001cf62487d326cc3ef9445429b2b98878d8e9224"}})
+  async requestRoads(path: any, vehicleId: string){
+    let res: any = await axios.post(this.restUrl+'road', {path, vehicleId});
+    let endlen = res.data.road.length-1
     let myTrace: Trace = {
-      route: res.data.features[0].geometry.coordinates,
-      start: [firstPoint.geo.center.longitude, firstPoint.geo.center.latitude],
-      end: [secondPoint.geo.center.longitude, secondPoint.geo.center.latitude],
-      stations: []
+      route: res.data.road,
+      start: [res.data.road[0][0], res.data.road[0][1]],
+      end: [res.data.road[endlen][0], res.data.road[endlen][1]],
+      stations: res.data.stations
     }
     return myTrace;
   }
 
-  async requestInterestPoint(data: String): Promise<any>{
+  async requestInterestPoint(data: String): Promise<Vehicle[]>{
 
     const options = {
       method: 'GET',
@@ -98,26 +76,7 @@ export class ApiService {
   }
 
   async requestVehicleList(page: number, size: number, search: string): Promise<any>{
-    let headers = {
-      'x-client-id': '65a0ec8803f11572e9c6ac69',
-      'x-app-id': '65a0ec8803f11572e9c6ac6b',
-    };
-
-    let client = createClient({
-      url: 'https://api.chargetrip.io/graphql',
-      fetchOptions: {
-        method: 'POST',
-        headers,
-      },
-      exchanges: [fetchExchange],
-    });
-
-    client
-      .query(this.vehicleListQuery, { page: 1,size:  50,search:  '' })
-      .toPromise()
-      .then((response) => {
-        console.log(response.data.vehicleList);
-      })
-      .catch((error: any) => console.log(error));
+    let res = await axios.get(this.restUrl+'vehicles');
+    return res.data.data.vehicleList;
   }
 }

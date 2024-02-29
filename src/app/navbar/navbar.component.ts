@@ -4,6 +4,7 @@ import { RouteService } from '../route.service';
 import { VehicleDataService } from '../vehicle-data.service';
 import { Router } from '@angular/router';
 import { VehicleCardComponent } from '../vehicle-card/vehicle-card.component';
+import { Vehicle } from '../vehicle';
 
 @Component({
   selector: 'app-navbar',
@@ -17,7 +18,7 @@ export class NavbarComponent {
   showSuggestions: boolean = false;
   showSecondSuggestions: boolean = false;
   loading: boolean = false;
-  vehicle: any | undefined = undefined;
+  vehicle: Vehicle | undefined = undefined;
   @ViewChild('firstPointName') firstPointName : ElementRef | undefined = undefined;
   @ViewChild('secondePointName') secondPointName : ElementRef | undefined = undefined;
   firstPoint: any | undefined = undefined;
@@ -35,8 +36,16 @@ export class NavbarComponent {
 
   async requestRoad(){
     this.loading = true;
-    let res = await this.apiservice.requestRoad(this.firstPoint, this.secondPoint);
-    this.routeService.setTraceData(res);
+    if (this.vehicle == undefined){
+      this.loading = false;
+      return;
+    }
+    try {
+      let res = await this.apiservice.requestRoads([this.firstPoint, this.secondPoint], this.vehicle.id);
+      this.routeService.setTraceData(res);
+    } catch (e) {
+      console.log(e);
+    }
     this.loading = false;
   }
 
@@ -79,7 +88,6 @@ export class NavbarComponent {
     if (res != undefined && res != null && res.media != undefined && res.media != null) {
       this.vehicle = res;
     }
-    console.log("data : ", this.vehicle);
   }
 
   suppressVehicle(){
