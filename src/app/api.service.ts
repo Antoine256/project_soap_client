@@ -9,12 +9,12 @@ import {Vehicle } from "./vehicle";
 })
 export class ApiService {
 
-  private restUrl = "http://localhost:3000/";
+  private restUrl = "https://antoine256-project-api.azurewebsites.net/";
+  private soapUrl = "https://antoine256-project-rest-api.azurewebsites.net/"
 
   constructor() {}
 
   requestTime() {
-    let apiUrl = 'https://20.105.232.8:3000/my-soap-api';
     let xml = "<?xml version='1.0' encoding='utf-8'?>" +
       "<soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/' xmlns:web='urn:example:my-service'>" +
       "<soapenv:Header/>" +
@@ -25,7 +25,7 @@ export class ApiService {
       "</soapenv:Body> " +
       "</soapenv:Envelope>"
 
-    axios.post(apiUrl, xml, {
+    axios.post(this.soapUrl, xml, {
       headers: {
         'Content-Type': 'text/xml',
       },
