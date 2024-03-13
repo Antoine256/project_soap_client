@@ -27,13 +27,7 @@ export class NavbarComponent {
 
   constructor(private apiservice: ApiService, private routeService: RouteService, private service: VehicleDataService, private router: Router) {
   }
-
-  async requestTime() {
-    this.loading = true;
-    await this.apiservice.requestTime();
-    this.loading = false;
-  }
-
+  
   async requestRoad(){
     this.loading = true;
     if (this.vehicle == undefined){
@@ -42,6 +36,7 @@ export class NavbarComponent {
     }
     try {
       let res = await this.apiservice.requestRoads([this.firstPoint, this.secondPoint], this.vehicle.id);
+      //let res = await this.apiservice.staticRequestRoads();
       this.routeService.setTraceData(res);
     } catch (e) {
       console.log(e);

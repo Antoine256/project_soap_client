@@ -16,6 +16,7 @@ import '@maptiler/sdk/dist/maptiler-sdk.css';
 export class HomepageComponent {
   map: Map | undefined;
   markers: Marker[] = [];
+  time: string = '';
 
   @ViewChild('map')
   private mapContainer!: ElementRef<HTMLElement>;
@@ -63,18 +64,23 @@ export class HomepageComponent {
           'line-width': 5
         }
       });
-      this.markers.push(new Marker()
+      this.markers.push(new Marker({color: 'green'})
         .setLngLat(traceData.start)
         .addTo(this.map));
-      this.markers.push(new Marker()
+      this.markers.push(new Marker({color: 'red'})
         .setLngLat(traceData.end)
         .addTo(this.map));
       for(let i = 0; i < traceData.stations.length; i++){
-        this.markers.push(new Marker()
+        this.markers.push(new Marker({color: 'blue'})
           .setLngLat(traceData.stations[i])
           .addTo(this.map));
       };
+      this.time = traceData.time;
     });
+  }
+
+  closeModal() {
+    this.time = '';
   }
 
   ngAfterViewInit() {

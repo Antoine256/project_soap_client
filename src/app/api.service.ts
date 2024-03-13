@@ -9,37 +9,100 @@ import {Vehicle } from "./vehicle";
 })
 export class ApiService {
 
-  private restUrl = "https://antoine256-project-rest-api.azurewebsites.net/";
-  private soapUrl = "https://antoine256-project-api.azurewebsites.net/"
+  private restUrl = "http://localhost:3000/";
+  //private restUrl = "https://antoine256-project-rest-api.azurewebsites.net/";
+  //private soapUrl = "https://antoine256-project-api.azurewebsites.net/"
 
   constructor() {}
 
-  requestTime() {
-    let xml = "<?xml version='1.0' encoding='utf-8'?>" +
-      "<soapenv:Envelope xmlns:soapenv='http://schemas.xmlsoap.org/soap/envelope/' xmlns:web='urn:example:my-service'>" +
-      "<soapenv:Header/>" +
-      "<soapenv:Body> " +
-      "<web:MyFunction> " +
-      "<web:name>'Route de la soie'</web:name> " +
-      "</web:MyFunction> " +
-      "</soapenv:Body> " +
-      "</soapenv:Envelope>"
-
-    axios.post(this.soapUrl, xml, {
-      headers: {
-        'Content-Type': 'text/xml',
-      },
-
-    }).then((response) => {
-      console.log(response);
-    })
-  }
-
   async requestRoads(path: any, vehicleId: string){
+    console.log("path : ", path);
+    console.log("vehicleId : ", vehicleId);
     let res: any = await axios.post(this.restUrl+'road', {path, vehicleId});
     let endlen = res.data.road.length-1
     let myTrace: Trace = {
       route: res.data.road,
+      time: res.data.time,
+      start: [res.data.road[0][0], res.data.road[0][1]],
+      end: [res.data.road[endlen][0], res.data.road[endlen][1]],
+      stations: res.data.stations
+    }
+    return myTrace;
+  }
+
+  async staticRequestRoads(){
+    let path = [
+      {
+        "type": "geo",
+        "text": {
+          "primary": "Jongieux",
+          "secondary": "Search for Jongieux",
+          "highlight": [
+            {
+              "start": 0,
+              "length": 6
+            }
+          ]
+        },
+        "geo": {
+          "name": "Jongieux",
+          "center": {
+            "latitude": 45.73773,
+            "longitude": 5.79927
+          },
+          "bounds": {
+            "ne": {
+              "latitude": 45.741291,
+              "longitude": 5.801639
+            },
+            "sw": {
+              "latitude": 45.736332,
+              "longitude": 5.796747
+            }
+          },
+          "cc": "FR",
+          "type": "locality"
+        }
+      },
+      {
+        "type": "geo",
+        "text": {
+          "primary": "Toulouse",
+          "secondary": "Search for Toulouse",
+          "highlight": [
+            {
+              "start": 0,
+              "length": 7
+            }
+          ]
+        },
+        "geo": {
+          "name": "Toulouse",
+          "center": {
+            "latitude": 43.60426,
+            "longitude": 1.44367
+          },
+          "bounds": {
+            "ne": {
+              "latitude": 43.66907994633145,
+              "longitude": 1.5156179631414892
+            },
+            "sw": {
+              "latitude": 43.53262007719572,
+              "longitude": 1.2822381092561068
+            }
+          },
+          "cc": "FR",
+          "type": "locality"
+        }
+      }
+    ];
+    let vehicleId = "6077821445221216223f77b1";
+    let res: any = await axios.post(this.restUrl+'road', {path, vehicleId});
+    let endlen = res.data.road.length-1
+    let myTrace: Trace = {
+      route: res.data.road,
+      time: res.data.time,
       start: [res.data.road[0][0], res.data.road[0][1]],
       end: [res.data.road[endlen][0], res.data.road[endlen][1]],
       stations: res.data.stations
