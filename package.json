@@ -22,7 +22,9 @@
     "@urql/core": "^4.2.3",
     "axios": "^1.6.7",
     "easy-soap-request": "^5.5.0",
+    "events": "^3.3.0",
     "graphql-tag": "^2.12.6",
+    "maplibre-gl": "^4.1.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"
