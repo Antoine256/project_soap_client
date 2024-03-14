@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { LngLatLike, Map, MapStyle, Marker, config} from '@maptiler/sdk';
+import { Map, MapStyle, Marker, config} from '@maptiler/sdk';
 import {RouteService} from '../route.service';
 import {Trace} from '../trace.model';
 import {NavbarComponent} from '../navbar/navbar.component';
