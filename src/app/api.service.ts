@@ -9,9 +9,8 @@ import {Vehicle } from "./vehicle";
 })
 export class ApiService {
 
-  private restUrl = "http://localhost:3000/";
-  //private restUrl = "https://antoine256-project-rest-api.azurewebsites.net/";
-  //private soapUrl = "https://antoine256-project-api.azurewebsites.net/"
+  //private restUrl = "http://localhost:3000/";
+  private restUrl = "https://antoine256-project-rest-api.azurewebsites.net/";
 
   constructor() {}
 
