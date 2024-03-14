@@ -31,7 +31,7 @@
             "allowedCommonJsDependencies": [
               "events",
               "maplibre-gl"
-            ]
+            ],
             "scripts": []
           },
           "configurations": {
