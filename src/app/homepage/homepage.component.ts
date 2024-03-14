@@ -26,7 +26,6 @@ export class HomepageComponent {
     config.apiKey = 'Yg2PXl7lchJuyJ0YzbyN';
 
     this.routeService.getTraceData().subscribe((traceData: Trace) => {
-      console.log('Processing trace data:', traceData);
       // Utilisez le tracé dans votre composant de carte
       if (this.map === undefined) {
         return;

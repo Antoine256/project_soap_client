@@ -27,7 +27,7 @@ export class NavbarComponent {
 
   constructor(private apiservice: ApiService, private routeService: RouteService, private service: VehicleDataService, private router: Router) {
   }
-  
+
   async requestRoad(){
     this.loading = true;
     if (this.vehicle == undefined){
@@ -46,11 +46,9 @@ export class NavbarComponent {
 
   async requestPOI(event: any, numInput: number){
     let data = event.target.value;
-    console.log("data : ", data);
     if (data.length > 3) {
       let res = await this.apiservice.requestInterestPoint(data);
       this.suggestions = res;
-      console.log("suggestions : ", this.suggestions);
       if (numInput == 1)
         this.showSuggestions = true;
       else
@@ -62,7 +60,6 @@ export class NavbarComponent {
   }
 
   selectSuggestion(event: any){
-    console.log("event : ", event);
     this.firstPoint = event;
     if (this.firstPointName == undefined)return ;
     this.firstPointName.nativeElement.value = event.text.primary;
@@ -71,7 +68,6 @@ export class NavbarComponent {
   }
 
   selectSecondSuggestion(event: any){
-    console.log("event : ", event);
     this.secondPoint = event;
     if (this.secondPointName == undefined)return ;
     this.secondPointName.nativeElement.value = event.text.primary;
