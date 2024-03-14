@@ -28,10 +28,6 @@
             "styles": [
               "src/styles.css"
             ],
-            "allowedCommonJsDependencies": [
-              "events",
-              "maplibre-gl"
-            ],
             "scripts": []
           },
           "configurations": {
