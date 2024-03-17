@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import axios from 'axios';
 import { Trace } from './trace.model';
-import { createClient, fetchExchange } from '@urql/core';
 import {Vehicle } from "./vehicle";
 
 @Injectable({
@@ -9,8 +8,8 @@ import {Vehicle } from "./vehicle";
 })
 export class ApiService {
 
-  //private restUrl = "http://localhost:3000/";
-  private restUrl = "https://antoine256-project-rest-api.azurewebsites.net/";
+  private restUrl = "http://localhost:3000/";
+  //private restUrl = "https://antoine256-project-rest-api.azurewebsites.net/";
 
   constructor() {}
 
